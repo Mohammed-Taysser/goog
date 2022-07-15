@@ -1,0 +1,9 @@
+@import '~bulma/bulma.sass';
+@import 'helper/keyframes';
+@import 'helper/dark-mode';
+@import 'helper/masonry';
+
+.tabs.is-toggle li.is-active a {
+	background-color: $primary;
+	border-color: $primary;
+}
