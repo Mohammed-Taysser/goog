@@ -1,0 +1,37 @@
+// dark mode
+@keyframes dark-mode-star-1 {
+	5%,
+	20% {
+		opacity: 0;
+		transform: scale(0) rotate(90deg) translateZ(0);
+	}
+	25%,
+	100% {
+		opacity: 1;
+		transform: scale(1) rotate(180deg) translateZ(0);
+	}
+}
+
+@keyframes dark-mode-star-2 {
+	0%,
+	60% {
+		opacity: 1;
+		transform: scale(1) rotate(0) translateZ(0);
+	}
+	65%,
+	70% {
+		opacity: 0;
+		transform: scale(0) rotate(90deg) translateZ(0);
+	}
+	75%,
+	100% {
+		opacity: 1;
+		transform: scale(1) rotate(180deg) translateZ(0);
+	}
+}
+
+@keyframes dark-mode-sun {
+	to {
+		transform: rotate(360deg) translateZ(0);
+	}
+}
