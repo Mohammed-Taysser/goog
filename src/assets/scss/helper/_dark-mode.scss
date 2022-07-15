@@ -1,0 +1,65 @@
+body.dark {
+	--text-color: #fff;
+	--bg-color: #2c3144;
+}
+
+body.dark {
+	background-color: var(--bg-color);
+	color: var(--text-color);
+
+	nav.navbar {
+		background-color: var(--bg-color);
+	}
+
+	.tabs a {
+		color: #fff;
+		&:hover{
+			background-color: $primary;
+			border-color: $primary;
+		}
+	}
+
+	.my-projects {
+		.single-project {
+			background-color: #3a4055;
+		}
+	}
+}
+
+.dark-mode-container {
+	svg {
+		width: 30px;
+		height: 30px;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		fill: none;
+		stroke-width: 2px;
+		cursor: pointer;
+
+		&.sun {
+			stroke: #f0c644;
+
+			.lines {
+				transform-origin: 12px 12px;
+				animation: dark-mode-sun 20s linear infinite;
+			}
+		}
+		&.moon {
+			stroke: #2c3144;
+
+			.star-1,
+			.star-2 {
+				stroke: #f0c644;
+			}
+			.star-1 {
+				transform-origin: 15px 3px;
+				animation: dark-mode-star-1 5s linear infinite;
+			}
+
+			.star-2 {
+				transform-origin: 21px 9px;
+				animation: dark-mode-star-2 5s linear infinite;
+			}
+		}
+	}
+}
