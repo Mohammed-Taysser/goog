@@ -7,23 +7,19 @@ import Results from '../components/Results';
 import { googleSearch } from '../apps/apiClient';
 import { Puff } from 'react-loader-spinner';
 import Images from '../components/Images';
-import News from '../components/News';
-import Videos from '../components/Videos';
 import { useDebounce } from 'use-debounce';
 
 function Homepage() {
 	const [results, setResults] = useState([]);
-	const [images, setImages] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [loadingError, setLoadingError] = useState(null);
 	const [searchType, setSearchType] = useState('search');
-	const [searchQuery, setSearchQuery] = useState('JS');
-	const [news, setNews] = useState([]);
+	const [searchQuery, setSearchQuery] = useState('Google');
 	const [query] = useDebounce(searchQuery, 1000);
 
 	useEffect(() => {
 		getApiResult();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query, searchType]);
 
 	const getApiResult = () => {
@@ -31,17 +27,21 @@ function Homepage() {
 		googleSearch(searchQuery, searchType)
 			.then((response) => response.json())
 			.then((json) => {
-				switch (searchType) {
-					case 'image':
-						setImages(json.image_results);
-						break;
-					case 'news':
-						setNews(json.entries);
-						break;
-					case 'video':
-					default:
-						setResults(json.results);
-						break;
+				if (searchType === 'image') {
+					setResults(json.image_results);
+				} else if (searchType === 'news') {
+					setResults(
+						json.entries.map((item) => ({
+							title: item.title,
+							link: item.link,
+						}))
+					);
+				} else {
+					setResults(json.results.map((item) => ({
+						title: item.title,
+						link: item.link,
+						description: item.description,
+					})));
 				}
 			})
 			.catch((error) => setLoadingError(error))
@@ -66,16 +66,17 @@ function Homepage() {
 				</div>
 			);
 		} else if (results.length > 0) {
-			switch (searchType) {
-				case 'image':
-					return <Images images={images} />;
-				case 'news':
-					return <News results={news} />;
-				case 'video':
-					return <Videos results={results} />;
-				default:
-					return <Results results={results} />;
+			if (searchType === 'image') {
+				return <Images images={results} />;
 			}
+			return (
+				<Results
+					results={results}
+					{...{
+						withVideo: searchType === 'video',
+					}}
+				/>
+			);
 		} else {
 			return (
 				<article className='message is-warning'>
@@ -87,13 +88,14 @@ function Homepage() {
 
 	const onSearchTypeClick = (evt, type) => {
 		evt.preventDefault();
+		setResults([]);
 		setSearchType(type);
 	};
 
-	const onFormSubmit = evt=>{
-		evt.preventDefault()
-		getApiResult()
-	}
+	const onFormSubmit = (evt) => {
+		evt.preventDefault();
+		getApiResult();
+	};
 
 	return (
 		<div className='container my-6'>
