@@ -1,0 +1,33 @@
+.masonry-container {
+	column-gap: 0.5em;
+	min-height: 50vh;
+
+	.masonry-brick {
+		background: #fff;
+		margin: 0.5em 0;
+
+		img{
+			max-width: 100%;
+			// width: 100%;
+			// object-fit: cover;
+		}
+	}
+}
+
+@media (min-width: 1024px) {
+	.masonry-container {
+		column-count: 4;
+	}
+}
+
+@media (max-width: 1023px) {
+	.masonry-container {
+		column-count: 3;
+	}
+}
+
+@media (max-width: 767px) {
+	.masonry-container {
+		column-count: 2;
+	}
+}
